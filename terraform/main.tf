@@ -25,7 +25,7 @@ resource "proxmox_lxc" "debian_server" {
   start = true
 }
 
-resource "ansible_host" "my_host" {
+resource "ansible_host" "debian_host" {
   count  = 1
   name   = proxmox_lxc.debian_server[count.index].vmid
   groups = ["containers"]
@@ -35,12 +35,10 @@ resource "ansible_host" "my_host" {
   }
 }
 
-resource "ansible_host" "my_host2" {
-  name   = "pve1"
-  groups = ["hosts"]
-  variables = {
-    ansible_host = "http://20.0.0.38/"
-    ansible_user = "root"
-  }
+resource "ansible_playbook" "myplaybook" {
+  playbook   = "../ansible/update_all.yaml"
+  name       = proxmox_lxc.debian_server[0].hostname
+  replayable = true
+
 }
 
