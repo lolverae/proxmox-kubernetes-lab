@@ -1,5 +1,5 @@
 ---
-- hosts: debian_vms
+- hosts: all
   become: true
   tasks:
     - name: Update package lists
