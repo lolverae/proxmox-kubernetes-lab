@@ -1,16 +1,16 @@
 resource "ansible_host" "debian_host" {
-  count  = 1
-  name   = proxmox_lxc.debian_server[count.index].vmid
+  count  = var.server_count
+  name   = var.server_id[count.index]
   groups = ["containers"]
   variables = {
-    lxc_host      = proxmox_lxc.debian_server[count.index].vmid
+    lxc_host      = var.server_id[count.index]
     physical_host = "pve1"
   }
 }
 
 resource "ansible_playbook" "myplaybook" {
-  playbook   = "../ansible/update_all.yaml"
-  name       = proxmox_lxc.debian_server[0].hostname
+  playbook   = "../../../ansible/update_all.yaml"
+  name       = "Update playbook"
   replayable = true
   extra_vars = {
     ansible_user      = var.ansible_user

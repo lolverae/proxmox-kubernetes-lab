@@ -13,3 +13,11 @@ variable "ansible_become_password" {
   sensitive = true
 }
 
+variable "server_count" {
+  type = number
+}
+
+variable "server_id" {
+  type = any 
+}
+
