@@ -12,18 +12,9 @@ variable "proxmox_api_token_secret" {
   sensitive = true
 }
 
-variable "proxmox_node" {
-  type = string
-}
-
 variable "ct_password" {
   type      = string
   sensitive = true
-}
-
-variable "ansible_user" {
-  type    = string
-  default = "alberto"
 }
 
 variable "ansible_password" {
