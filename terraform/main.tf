@@ -27,3 +27,11 @@ module "ansible_debian" {
   server_id               = module.debian_server.server_id
   server_count            = var.server_count
 }
+
+module "ansible_alma" {
+  source                  = "./modules/ansible/"
+  ansible_password        = var.ansible_password
+  ansible_become_password = var.ansible_become_password
+  server_id               = module.alma_server.server_id
+  server_count            = var.server_count
+}
