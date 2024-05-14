@@ -1,0 +1,40 @@
+---
+- hosts: debian_servers
+  become: true
+
+  tasks:
+    - name: Update package lists
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install basic packages
+      apt:
+        name:
+          - vim
+          - net-tools
+          - wget
+          - curl
+          - bash-completion
+        state: present
+
+    - name: Configure UFW firewall (basic)
+      ufw:
+        rule: allow
+        port: "{{ allowed_ports }}"
+        proto: tcp
+        comment: "Allow SSH, HTTP, and HTTPS"
+      vars:
+        allowed_ports:
+          - 22
+          - 80
+          - 443
+      when: not firewalld_is_active  # Only configure UFW if firewalld is not active
+
+  handlers:
+    - name: Reload UFW firewall after configuration changes
+      ufw:
+        state: reloaded
+      when: ufw_rule_changed
+
+

@@ -1,0 +1,39 @@
+---
+- hosts: almalinux_servers
+  become: true
+
+  tasks:
+    - name: Update package lists
+      yum:
+        name: "*"
+        state: latest
+        update_cache: yes
+
+    - name: Install basic packages
+      yum:
+        name:
+          - vim
+          - net-tools
+          - wget
+          - curl
+          - bash-completion
+        state: present
+
+    - name: Configure firewalld service (basic)
+      firewalld:
+        service: enabled
+        permanent: yes
+        ports:
+          - 22/tcp
+          - 80/tcp
+          - 443/tcp
+        default_zone: firewalld
+
+  handlers:
+    - name: Restart firewalld service after configuration changes
+      service:
+        name: firewalld
+        state: reloaded
+      when: firewalld_changed
+
+
