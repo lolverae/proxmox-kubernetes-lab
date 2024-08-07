@@ -79,7 +79,7 @@ variable "vm_os_disk_storage" {
 variable "vm_talos_tmpl_name" {
   type        = string
   description = "Name of iso image for Talos."
-  default     = "talos-2204"
+  default     = "talos"
 }
 
 variable "vm_host_number" {

@@ -11,12 +11,11 @@ resource "proxmox_vm_qemu" "talos_vm" {
   sockets          = var.vm_sockets
   cpu              = var.vm_cpu_type
   memory           = var.vm_memory_mb
-  bootdisk         = "virtio0"
   scsihw           = "virtio-scsi-single"
   hotplug          = "network,disk,usb,memory,cpu"
   numa             = true
   automatic_reboot = false
-  desc             = "This VM is managed by Terraform, cloned from an Cloud-init Talos image, configured with an internal network"
+  desc             = "This VM is managed by Terraform, cloned from an Talos image"
   tags             = var.vm_tags
 
   network {
@@ -27,11 +26,4 @@ resource "proxmox_vm_qemu" "talos_vm" {
   ipconfig0 = "ip=${cidrhost(var.vm_net_subnet_cidr, var.vm_host_number + count.index)}${local.vm_net_subnet_mask},gw=${local.vm_net_default_gw}"
 
   ciuser = var.vm_user
-
-  lifecycle {
-    ignore_changes = [
-      tags
-    ]
-  }
-
 }

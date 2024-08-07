@@ -1,6 +1,5 @@
 module "nodes" {
-  source = "./modules/talos_vm"
-
+  source              = "./modules/talos_vm"
   node_count          = 1
   pm_host             = var.pm_host
   pm_api_url          = var.pm_api_url
