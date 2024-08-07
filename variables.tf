@@ -11,6 +11,21 @@ variable "vm_talos_tmpl_name" {
   default     = "talos"
 }
 
+variable "pm_host1" {
+  type    = string
+  default = "pve1"
+}
+
+variable "pm_host2" {
+  type    = string
+  default = "pve2"
+}
+
+variable "pm_host3" {
+  type    = string
+  default = "pve3"
+}
+
 # Common infrastructure
 ########################################################################
 variable "internal_net_name" {
