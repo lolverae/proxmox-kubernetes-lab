@@ -26,6 +26,22 @@ variable "pm_host3" {
   default = "pve3"
 }
 
+variable "pm_host4" {
+  type    = string
+  default = "pve4"
+}
+
+variable "alma_container_password" {
+  type        = string
+  sensitive   = true
+  description = "Password for the alma container"
+}
+
+variable "alma_os_template" {
+  type        = string
+  description = "LXC template for alma container"
+}
+
 # Common infrastructure
 ########################################################################
 variable "internal_net_name" {
