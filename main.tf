@@ -1,6 +1,6 @@
 module "main_node" {
   source              = "./modules/talos_vm"
-  node_count          = 1
+  node_count          = 3
   pm_host             = var.pm_host1
   pm_api_url          = var.pm_api_url
   pm_api_token_id     = var.pm_api_token_id
@@ -22,7 +22,7 @@ module "main_node" {
 
 module "secondary_node" {
   source              = "./modules/talos_vm"
-  node_count          = 1
+  node_count          = 3
   pm_host             = var.pm_host2
   pm_api_url          = var.pm_api_url
   pm_api_token_id     = var.pm_api_token_id
@@ -44,7 +44,7 @@ module "secondary_node" {
 
 module "third_node" {
   source              = "./modules/talos_vm"
-  node_count          = 1
+  node_count          = 3
   pm_host             = var.pm_host3
   pm_api_url          = var.pm_api_url
   pm_api_token_id     = var.pm_api_token_id
@@ -66,7 +66,7 @@ module "third_node" {
 
 module "command_center" {
   source              = "./modules/alma_lxc"
-  alma_count          = 1
+  alma_count          = 4
   os_template         = var.alma_os_template
   ct_password         = var.alma_container_password
   pm_host             = var.pm_host4
