@@ -64,15 +64,3 @@ module "third_node" {
   vm_tags             = var.env_name
 }
 
-module "command_center" {
-  source              = "./modules/alma_lxc"
-  alma_count          = 4
-  os_template         = var.alma_os_template
-  ct_password         = var.alma_container_password
-  pm_host             = var.pm_host4
-  pm_api_url          = var.pm_api_url
-  pm_api_token_id     = var.pm_api_token_id
-  pm_api_token_secret = var.pm_api_token_secret
-  pm_tls_insecure     = var.pm_tls_insecure
-  vm_name_prefix      = "${var.env_name}-${var.pm_host1}-vm"
-}

@@ -26,11 +26,6 @@ variable "pm_host3" {
   default = "pve3"
 }
 
-variable "pm_host4" {
-  type    = string
-  default = "pve4"
-}
-
 variable "alma_container_password" {
   type        = string
   sensitive   = true
