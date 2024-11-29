@@ -37,6 +37,16 @@ variable "alma_os_template" {
   description = "LXC template for alma container"
 }
 
+variable "node_tag" {
+  type    = string
+  default = "node"
+}
+
+variable "controller_tag" {
+  type    = string
+  default = "ctrl"
+}
+
 # Common infrastructure
 ########################################################################
 variable "internal_net_name" {

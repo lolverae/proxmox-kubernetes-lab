@@ -14,7 +14,7 @@ resource "proxmox_vm_qemu" "talos_vm" {
   scsihw           = "virtio-scsi-single"
   hotplug          = "network,disk,usb,memory,cpu"
   numa             = true
-  automatic_reboot = false
+  automatic_reboot = true
   desc             = "This VM is managed by Terraform, cloned from an Talos image"
   tags             = var.vm_tags
 
