@@ -9,7 +9,7 @@ module "main_node" {
   vm_talos_tmpl_name  = var.vm_talos_tmpl_name
   vm_name_prefix      = "node-${var.pm_host1}"
   vm_max_vcpus        = var.vm_max_vcpus
-  vm_vcpus            = 1
+  vm_vcpus            = 2
   vm_sockets          = var.vm_sockets
   vm_cpu_type         = var.vm_cpu_type
   vm_os_disk_storage  = var.vm_os_disk_storage
@@ -31,7 +31,7 @@ module "secondary_node" {
   vm_talos_tmpl_name  = var.vm_talos_tmpl_name
   vm_name_prefix      = "node-${var.pm_host2}"
   vm_max_vcpus        = var.vm_max_vcpus
-  vm_vcpus            = 1
+  vm_vcpus            = 2
   vm_sockets          = var.vm_sockets
   vm_cpu_type         = var.vm_cpu_type
   vm_os_disk_storage  = var.vm_os_disk_storage
@@ -53,7 +53,7 @@ module "third_node" {
   vm_talos_tmpl_name  = var.vm_talos_tmpl_name
   vm_name_prefix      = "node-${var.pm_host3}"
   vm_max_vcpus        = var.vm_max_vcpus
-  vm_vcpus            = 1
+  vm_vcpus            = 2
   vm_sockets          = var.vm_sockets
   vm_cpu_type         = var.vm_cpu_type
   vm_os_disk_storage  = var.vm_os_disk_storage
@@ -75,7 +75,7 @@ module "controller_one" {
   vm_talos_tmpl_name  = var.vm_talos_tmpl_name
   vm_name_prefix      = "ctrl-${var.pm_host1}"
   vm_max_vcpus        = var.vm_max_vcpus
-  vm_vcpus            = 1
+  vm_vcpus            = 2
   vm_sockets          = var.vm_sockets
   vm_cpu_type         = var.vm_cpu_type
   vm_os_disk_storage  = var.vm_os_disk_storage
@@ -97,7 +97,7 @@ module "controller_two" {
   vm_talos_tmpl_name  = var.vm_talos_tmpl_name
   vm_name_prefix      = "ctrl-${var.pm_host2}"
   vm_max_vcpus        = var.vm_max_vcpus
-  vm_vcpus            = 1
+  vm_vcpus            = 2
   vm_sockets          = var.vm_sockets
   vm_cpu_type         = var.vm_cpu_type
   vm_os_disk_storage  = var.vm_os_disk_storage
