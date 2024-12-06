@@ -16,7 +16,7 @@ variable "vm_tags" {
 
 variable "vm_net_name" {
   type        = string
-  description = ""
+  description = "vmbr0"
 }
 
 variable "vm_net_subnet_cidr" {
