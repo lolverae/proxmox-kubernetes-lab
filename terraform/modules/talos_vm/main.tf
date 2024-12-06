@@ -12,10 +12,31 @@ resource "proxmox_vm_qemu" "talos_vm" {
   cpu              = var.vm_cpu_type
   memory           = var.vm_memory_mb
   scsihw           = "virtio-scsi-single"
+  boot             = "order=scsi0;net0;ide0"
+  hotplug          = "disk,network,usb"
   numa             = true
   automatic_reboot = true
   desc             = "This VM is managed by Terraform, cloned from an Talos image"
   tags             = var.vm_tags
+
+  disks {
+    ide {
+      ide0 {
+        cdrom {
+          iso = "local:iso/metal-amd64.iso"
+        }
+      }
+    }
+    scsi {
+      scsi0 {
+        disk {
+          size     = "40G"
+          storage  = "local-lvm"
+          iothread = true
+        }
+      }
+    }
+  }
 
   network {
     model    = "virtio"
