@@ -1,0 +1,48 @@
+image:
+  tag: latest
+env:
+  TZ: America/CST
+imagePullSecrets:
+  - name: regcred
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  annotations:
+  # Add any additional annotations as needed
+  hosts:
+    - host: homarr.d2-services.home.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - homarr.d2-services.home.local
+persistence:
+  - name: homarr-config
+    enabled: true
+    storageClassName: vsphere-csi-sc
+    accessMode: ReadWriteOnce
+    size: 512Mi
+    mountPath: /app/data/configs
+  - name: homarr-database
+    enabled: true
+    storageClassName: vsphere-csi-sc
+    accessMode: ReadWriteOnce
+    size: 512Mi
+    mountPath: /app/database
+  - name: homarr-icons
+    enabled: true
+    storageClassName: vsphere-csi-sc
+    accessMode: ReadWriteOnce
+    size: 512Mi
+    mountPath: /app/public/icons
+livenessProbe:
+  httpGet:
+    path: /
+    port: 7575
+  initialDelaySeconds: 30
+readinessProbe:
+  httpGet:
+    path: /
+    port: 7575
+  initialDelaySeconds: 20
