@@ -1,0 +1,52 @@
+image:
+  repository: ghcr.io/onedr0p/radarr
+  pullPolicy: IfNotPresent
+env:
+  TZ: UTC
+service:
+  main:
+    ports:
+      http:
+        port: 7878
+ingress:
+  main:
+    enabled: false
+probes:
+  liveness:
+    enabled: true
+    custom: true
+    spec:
+      exec:
+        command:
+          - /usr/bin/env
+          - bash
+          - -c
+          - curl --fail localhost:7878/api/v3/system/status?apiKey=`IFS=\> && while read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
+      failureThreshold: 5
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 10
+persistence:
+  config:
+    enabled: false
+  media:
+    enabled: false
+    mountPath: /media
+metrics:
+  enabled: false
+  serviceMonitor:
+    interval: 3m
+    scrapeTimeout: 1m
+  prometheusRule:
+    enabled: false
+    rules: []
+exporter:
+  image:
+    repository: ghcr.io/onedr0p/exportarr
+    tag: v1.3.1
+    pullPolicy: IfNotPresent
+  env:
+    port: 9793
+    additionalMetrics: false
+    unknownQueueItems: false
