@@ -9,13 +9,10 @@ ingress:
   ingressClassName: nginx
   annotations:
   hosts:
-    - host: homarr.d2-services.home.local
+    - host: homarr.totorolab
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls:
-    - hosts:
-        - homarr.d2-services.home.local
 persistence:
   - name: homarr-config
     enabled: true
