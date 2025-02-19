@@ -31,7 +31,7 @@ resource "proxmox_vm_qemu" "talos_vm" {
       scsi0 {
         disk {
           size     = "40G"
-          storage  = "local-lvm"
+          storage  = "pmoxpool01"
           iothread = true
         }
       }
@@ -39,6 +39,7 @@ resource "proxmox_vm_qemu" "talos_vm" {
   }
 
   network {
+    id       = 0
     model    = "virtio"
     bridge   = "vmbr0"
     firewall = false
