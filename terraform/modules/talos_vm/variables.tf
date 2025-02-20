@@ -140,7 +140,7 @@ variable "pm_host" {
 variable "pm_parallel" {
   type        = number
   description = "The number of simultaneous Proxmox processes. E.g: creating resources."
-  default     = 2
+  default     = 1
 }
 
 variable "pm_timeout" {

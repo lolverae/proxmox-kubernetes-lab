@@ -9,7 +9,7 @@ resource "proxmox_vm_qemu" "talos_vm" {
   cores            = var.vm_max_vcpus
   vcpus            = var.vm_vcpus
   sockets          = var.vm_sockets
-  cpu              = var.vm_cpu_type
+  cpu_type         = var.vm_cpu_type
   memory           = var.vm_memory_mb
   scsihw           = "virtio-scsi-single"
   boot             = "order=scsi0;net0;ide0"
