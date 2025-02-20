@@ -129,4 +129,3 @@ module "controller_three" {
   vm_user             = var.vm_user
   vm_tags             = var.controller_tag
 }
-

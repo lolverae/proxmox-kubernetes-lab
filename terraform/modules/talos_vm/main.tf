@@ -5,7 +5,7 @@ resource "proxmox_vm_qemu" "talos_vm" {
   qemu_os          = "l26"
   name             = "${var.vm_name_prefix}-${format("%02d", count.index + 1)}"
   agent            = 1
-  onboot           = true
+  onboot           = var.vm_onboot
   cores            = var.vm_max_vcpus
   vcpus            = var.vm_vcpus
   sockets          = var.vm_sockets
@@ -15,7 +15,8 @@ resource "proxmox_vm_qemu" "talos_vm" {
   boot             = "order=scsi0;net0;ide0"
   hotplug          = "disk,network,usb"
   numa             = true
-  automatic_reboot = true
+  automatic_reboot = false
+  vm_state         = "stopped"
   desc             = "This VM is managed by Terraform, cloned from an Talos image"
   tags             = var.vm_tags
 
@@ -30,7 +31,7 @@ resource "proxmox_vm_qemu" "talos_vm" {
     scsi {
       scsi0 {
         disk {
-          size     = "40G"
+          size     = "100G"
           storage  = "pmoxpool01"
           iothread = true
         }

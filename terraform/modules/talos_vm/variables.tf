@@ -28,7 +28,7 @@ variable "vm_net_subnet_cidr" {
 variable "vm_onboot" {
   type        = bool
   description = "Start the VM right after Proxmox host starts"
-  default     = true
+  default     = false
 }
 
 variable "vm_user" {
