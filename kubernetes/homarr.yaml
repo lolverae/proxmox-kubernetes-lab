@@ -1,0 +1,44 @@
+image:
+  tag: latest
+env:
+  TZ: America/CST
+imagePullSecrets:
+  - name: regcred
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  annotations:
+  hosts:
+    - host: homarr.totorolab
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+persistence:
+  - name: homarr-config
+    enabled: true
+    storageClassName: k8s-cephfs
+    accessMode: ReadWriteOnce
+    size: 512Mi
+    mountPath: /app/data/configs
+  - name: homarr-database
+    enabled: true
+    storageClassName: k8s-cephfs
+    accessMode: ReadWriteOnce
+    size: 512Mi
+    mountPath: /app/database
+  - name: homarr-icons
+    enabled: true
+    storageClassName: k8s-cephfs
+    accessMode: ReadWriteOnce
+    size: 512Mi
+    mountPath: /app/public/icons
+livenessProbe:
+  httpGet:
+    path: /
+    port: 7575
+  initialDelaySeconds: 30
+readinessProbe:
+  httpGet:
+    path: /
+    port: 7575
+  initialDelaySeconds: 20

@@ -1,0 +1,60 @@
+persistence:
+  enabled: true
+  existingClaim: grafana-pvc
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+deployment:
+  enabled: true
+  replicas: 1
+  podSecurityContext:
+    fsGroup: 472
+    supplementalGroups:
+      - 0
+  containers:
+    - name: grafana
+      image:
+        repository: grafana/grafana
+        tag: latest
+        pullPolicy: IfNotPresent
+      ports:
+        - name: http-grafana
+          containerPort: 3000
+          protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /robots.txt
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 2
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: 3000
+        timeoutSeconds: 1
+      resources:
+        requests:
+          cpu: 250m
+          memory: 750Mi
+      volumeMounts:
+        - mountPath: /var/lib/grafana
+          name: grafana-pv
+service:
+  enabled: true
+  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: http-grafana
+      protocol: TCP
+  sessionAffinity: None
+extraVolumes:
+  - name: grafana-pv
+    persistentVolumeClaim:
+      claimName: grafana-pvc
