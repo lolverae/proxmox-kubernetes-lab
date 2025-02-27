@@ -34,10 +34,12 @@ jellyfin:
   env: []
 persistence:
   config:
+    storageClass: k8s-cephfs
     enabled: true
     accessMode: ReadWriteOnce
     size: 5Gi
   media:
+    storageClass: k8s-cephfs
     enabled: true
     accessMode: ReadWriteOnce
     size: 25Gi
