@@ -11,8 +11,8 @@ spec:
         kind: HelmRepository
         name: jellyfin
         namespace: flux-system
-      version: '*' # You can specify a specific version here
-  interval: 1h # Reconciliation interval
+      version: '*'
+  interval: 1h
   install:
     createNamespace: true
   values:
