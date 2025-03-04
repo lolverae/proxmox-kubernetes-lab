@@ -1,62 +1,86 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: homarr
   namespace: homarr
 spec:
-  interval: 1h
+  interval: 30m
   chart:
     spec:
       chart: homarr
-      version: '*'
       sourceRef:
         kind: HelmRepository
         name: homarr
         namespace: flux-system
-  install:
-    createNamespace: true
+      interval: 1m
   values:
+    replicaCount: 1
     image:
-      tag: latest
+      repository: ghcr.io/homarr-labs/homarr
+      pullPolicy: IfNotPresent
+      tag: v1.8.0
     env:
       TZ: America/CST
+      AUTH_PROVIDERS: credentials
+      AUTH_SESSION_EXPIRY_TIME: 30d
     imagePullSecrets:
       - name: regcred
+    service:
+      enabled: true
+      type: ClusterIP
+      ports:
+        app:
+          port: 7575
+          targetPort: http
+          protocol: TCP
+    containerPorts:
+      http:
+        port: 7575
+        protocol: TCP
     ingress:
       enabled: true
-      ingressClassName: nginx
+      className: nginx
       annotations: {}
       hosts:
         - host: homarr.totorolab
           paths:
             - path: /
               pathType: ImplementationSpecific
+      tls: []
     persistence:
-      - name: homarr-config
+      homarrDatabase:
         enabled: true
-        storageClassName: k8s-cephfs
-        accessMode: ReadWriteOnce
-        size: 512Mi
-        mountPath: /app/data/configs
-      - name: homarr-database
-        enabled: true
+        name: homarr-database
         storageClassName: k8s-cephfs
         accessMode: ReadWriteOnce
         size: 512Mi
         mountPath: /app/database
-      - name: homarr-icons
+      homarrConfig:
         enabled: true
+        name: homarr-config
+        storageClassName: k8s-cephfs
+        accessMode: ReadWriteOnce
+        size: 512Mi
+        mountPath: /app/data/configs
+      homarrImages:
+        enabled: true
+        name: homarr-icons
         storageClassName: k8s-cephfs
         accessMode: ReadWriteOnce
         size: 512Mi
         mountPath: /app/public/icons
     livenessProbe:
       httpGet:
-        path: /
+        path: /api/health/live
         port: 7575
       initialDelaySeconds: 30
     readinessProbe:
       httpGet:
-        path: /
+        path: /api/health/ready
         port: 7575
       initialDelaySeconds: 20
+    database:
+      externalDatabaseEnabled: false
+      migrationEnabled: true
+    mysql:
+      internal: false

@@ -5,4 +5,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  url: oci://ghcr.io/oben01/charts/homarr
+  url: oci://ghcr.io/homarr-labs/charts/homarr
