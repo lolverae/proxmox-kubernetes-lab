@@ -3,3 +3,6 @@ kind: Kustomization
 resources:
   - jellyfin
   - homarr
+  - prowlarr
+  - radarr
+  - sonarr
