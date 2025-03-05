@@ -1,10 +1,9 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: homarr
   namespace: homarr
 spec:
-  interval: 30m
   chart:
     spec:
       chart: homarr
@@ -12,75 +11,37 @@ spec:
         kind: HelmRepository
         name: homarr
         namespace: flux-system
-      interval: 1m
+      version: '*'
+  interval: 1h
+  install:
+    createNamespace: true
   values:
-    replicaCount: 1
     image:
       repository: ghcr.io/homarr-labs/homarr
       pullPolicy: IfNotPresent
       tag: v1.8.0
     env:
       TZ: America/CST
-      AUTH_PROVIDERS: credentials
-      AUTH_SESSION_EXPIRY_TIME: 30d
     imagePullSecrets:
       - name: regcred
-    service:
-      enabled: true
-      type: ClusterIP
-      ports:
-        app:
-          port: 7575
-          targetPort: http
-          protocol: TCP
-    containerPorts:
-      http:
-        port: 7575
-        protocol: TCP
-    ingress:
-      enabled: true
-      className: nginx
-      annotations: {}
-      hosts:
-        - host: homarr.totorolab
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
-      tls: []
     persistence:
       homarrDatabase:
         enabled: true
-        name: homarr-database
         storageClassName: k8s-cephfs
         accessMode: ReadWriteOnce
         size: 512Mi
         mountPath: /app/database
-      homarrConfig:
-        enabled: true
-        name: homarr-config
-        storageClassName: k8s-cephfs
-        accessMode: ReadWriteOnce
-        size: 512Mi
-        mountPath: /app/data/configs
       homarrImages:
         enabled: true
-        name: homarr-icons
         storageClassName: k8s-cephfs
         accessMode: ReadWriteOnce
         size: 512Mi
         mountPath: /app/public/icons
     livenessProbe:
       httpGet:
-        path: /api/health/live
+        path: /
         port: 7575
-      initialDelaySeconds: 30
     readinessProbe:
       httpGet:
-        path: /api/health/ready
+        path: /
         port: 7575
-      initialDelaySeconds: 20
-    database:
-      externalDatabaseEnabled: false
-      migrationEnabled: true
-    mysql:
-      internal: false
