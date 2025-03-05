@@ -3,6 +3,4 @@ kind: Kustomization
 resources:
   - jellyfin-helm-repository.yaml
   - homarr-helm-repository.yaml
-  - prowlarr-helm-repository.yaml
-  - radarr-helm-repository.yaml
-  - sonarr-helm-repository.yaml
+  - k8s-at-home-helm-repository.yaml
