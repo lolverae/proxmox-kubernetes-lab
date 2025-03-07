@@ -25,7 +25,11 @@ spec:
       kubernetesIngress:
         enabled: true
         publishedService:
-          enabled: true
+          enabled: false
+      kubernetesGateway:
+        enabled: true
+    gateway:
+      namespacePolicy: All
     persistence:
       enabled: true
       size: 128Mi
