@@ -4,3 +4,4 @@ resources:
   - jellyfin-helm-repository.yaml
   - homarr-helm-repository.yaml
   - k8s-at-home-helm-repository.yaml
+  - traefik-helm-repository.yaml
